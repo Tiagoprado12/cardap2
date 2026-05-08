@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Quero Mais Açaí | Cardápio Impressão A4 Perfeita</title>
+  <title>Quero Mais Açaí | Cardápio Impressão A4 Corrigido</title>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -16,9 +16,10 @@
       font-family: 'Baloo 2', cursive;
       background: #4f0b4e;
       color: white;
+      overflow-x: hidden;
     }
 
-    /* ========== PAINEL DE EDIÇÃO (ONLINE) ========== */
+    /* PAINEL DE EDIÇÃO RÁPIDA (ONLINE) */
     .edit-panel {
       position: fixed;
       bottom: 20px;
@@ -134,51 +135,31 @@
       display: none;
     }
 
-    /* ========== LAYOUT PRINCIPAL (VISUAL DIGITAL) ========== */
+    /* ========== LAYOUT PRINCIPAL (visual digital) ========== */
     .page {
       width: 100%;
       min-height: 100vh;
-      background: radial-gradient(circle at top left, rgba(255,180,0,0.08), transparent 25%),
-                  radial-gradient(circle at bottom right, rgba(255,120,0,0.12), transparent 25%),
-                  linear-gradient(180deg, #4a0849 0%, #651263 45%, #73146f 100%);
-      padding: 40px;
+      background:
+        radial-gradient(circle at top left, rgba(255,180,0,0.08), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(255,120,0,0.12), transparent 25%),
+        linear-gradient(180deg, #4a0849 0%, #651263 45%, #73146f 100%);
       position: relative;
+      padding: 40px;
     }
-
-    /* elementos decorativos só na tela */
-    .decor-x, .leaf {
-      display: block;
-    }
-    .decor-x {
-      position: absolute;
-      color: #ff9c00;
-      font-size: 100px;
-      opacity: 0.6;
-      font-weight: 800;
-      pointer-events: none;
-    }
-    .x1 { top: 120px; left: 80px; }
-    .x2 { top: 200px; right: 120px; }
-    .x3 { bottom: 220px; left: 140px; }
-    .leaf {
-      position: absolute;
-      width: 160px;
-      opacity: 0.8;
-      pointer-events: none;
-    }
-    .leaf-left { top: 0; left: 0; transform: rotate(-8deg); }
-    .leaf-right { top: 0; right: 0; transform: scaleX(-1) rotate(-8deg); }
 
     .logo {
       text-align: center;
       margin-bottom: 50px;
     }
+
     .logo-img {
       width: 100%;
       max-width: 420px;
       object-fit: contain;
       filter: drop-shadow(0 10px 25px rgba(0,0,0,0.35));
+      margin-bottom: 10px;
     }
+
     .logo span {
       display: block;
       font-size: 32px;
@@ -186,23 +167,43 @@
       margin-top: -10px;
     }
 
-    .grid-tradicional, .grid-premium, .grid-adicionais {
+    /* Grid para os sabores tradicionais: sempre 3 colunas em desktop */
+    .grid-tradicional {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
       margin-top: 30px;
     }
 
+    /* Grid para premium (3 colunas também) */
+    .grid-premium {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    /* Grid para adicionais (3 colunas) */
+    .grid-adicionais {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+
     .card {
       box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      overflow: hidden;
       border: 3px solid white;
       border-radius: 24px;
       padding: 22px;
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(3px);
       min-height: 270px;
+      transition: 0.3s ease;
       position: relative;
     }
+
     .card::before {
       content: '';
       position: absolute;
@@ -212,29 +213,33 @@
       height: 8px;
       background: linear-gradient(90deg, #ff9c00, #ffcc00);
     }
+
     .card h2 {
       color: #ff9c00;
       font-size: 34px;
       margin-bottom: 12px;
       line-height: 1;
     }
+
     .card ul {
       list-style: disc;
       padding-left: 24px;
     }
+
     .card li {
       font-size: 20px;
+      line-height: 1.2;
       font-weight: 700;
       margin-bottom: 4px;
     }
 
     .section-title {
+      text-shadow: 0 6px 15px rgba(0,0,0,0.25);
       text-align: center;
       color: #ff9c00;
       font-size: 72px;
       margin: 80px 0 40px;
       line-height: 1;
-      text-shadow: 0 6px 15px rgba(0,0,0,0.25);
     }
 
     .prices {
@@ -244,8 +249,10 @@
       gap: 30px;
       margin-top: 30px;
     }
+
     .price-box {
       border: 4px solid rgba(255,255,255,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
       background: white;
       color: #6b1668;
       padding: 20px 30px;
@@ -254,16 +261,20 @@
       text-align: center;
       position: relative;
     }
+
     .price-box h3 {
       font-size: 44px;
+      line-height: 1;
       font-weight: 800;
     }
+
     .price-box span {
       display: block;
       font-size: 28px;
       font-weight: 800;
       margin-bottom: 10px;
     }
+
     .price-box small {
       position: absolute;
       top: 10px;
@@ -272,13 +283,31 @@
       font-weight: 800;
     }
 
+    .footer {
+      border-top: 2px solid rgba(255,255,255,0.15);
+      padding-top: 30px;
+      margin-top: 70px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      font-size: 24px;
+      color: #f08cf2;
+      font-weight: 700;
+    }
+
     .premium-section {
       margin-top: 60px;
     }
+
     .premium-section h2 {
+      text-align: left;
+      color: white;
       font-size: 60px;
       margin-bottom: 20px;
     }
+
     .premium-section h2 span {
       color: #ff9c00;
     }
@@ -286,12 +315,14 @@
     .additional-card {
       background: rgba(255,255,255,0.05);
       backdrop-filter: blur(4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       border: 3px solid white;
       border-radius: 22px;
       padding: 20px;
       position: relative;
       min-height: 250px;
     }
+
     .additional-card .top-price {
       position: absolute;
       top: -18px;
@@ -303,49 +334,95 @@
       font-size: 34px;
       font-weight: 800;
     }
+
     .additional-card ul {
       margin-top: 60px;
       padding-left: 22px;
     }
+
     .additional-card li {
       font-size: 18px;
       font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .decor-x {
+      position: absolute;
+      color: #ff9c00;
+      font-size: 100px;
+      opacity: 0.6;
+      font-weight: 800;
+      pointer-events: none;
+    }
+
+    .x1 { top: 120px; left: 80px; }
+    .x2 { top: 200px; right: 120px; }
+    .x3 { bottom: 220px; left: 140px; }
+
+    .leaf {
+      position: absolute;
+      width: 160px;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .leaf-left {
+      top: 0;
+      left: 0;
+      transform: rotate(-8deg);
+    }
+
+    .leaf-right {
+      top: 0;
+      right: 0;
+      transform: scaleX(-1) rotate(-8deg);
     }
 
     .logo-central {
       text-align: center;
-      margin: 20px 0 30px;
+      margin: 40px 0 30px;
     }
+
     .logo-central img {
       max-width: 380px;
       width: 100%;
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
     }
 
-    .footer {
-      border-top: 2px solid rgba(255,255,255,0.2);
-      padding-top: 25px;
-      margin-top: 50px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-      align-items: center;
-      font-size: 24px;
-      color: #f08cf2;
-      font-weight: 700;
-    }
-
     @media (max-width: 900px) {
       .grid-tradicional, .grid-premium, .grid-adicionais {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       }
     }
 
-    /* ========== IMPRESSÃO PERFEITA – 2 FOLHAS A4 ========== */
+    @media (max-width: 768px) {
+      .page {
+        padding: 20px;
+      }
+      .section-title {
+        font-size: 44px;
+      }
+      .card h2 {
+        font-size: 28px;
+      }
+      .price-box h3 {
+        font-size: 36px;
+      }
+      .premium-section h2 {
+        font-size: 44px;
+        text-align: center;
+      }
+      .logo-central img {
+        max-width: 280px;
+      }
+    }
+
+    /* ========== IMPRESSÃO COM RODAPÉ CORRETAMENTE POSICIONADO ========== */
     @media print {
-      /* remove elementos decorativos e botões */
-      .edit-panel, .decor-x, .leaf {
+      .edit-panel, .edit-toggle, .print-toggle, .editor-card {
+        display: none !important;
+      }
+      .decor-x, .leaf {
         display: none !important;
       }
 
@@ -357,95 +434,144 @@
 
       .page {
         background: linear-gradient(180deg, #4a0849 0%, #651263 45%, #73146f 100%) !important;
-        padding: 0.4cm !important;
+        padding: 0.5cm !important;
         margin: 0 auto;
+        width: 100%;
+        min-height: auto;
       }
 
-      /* força cores exatas */
-      * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      /* cards com fundo e borda legível */
+      /* Mantém fundo e cores */
       .card, .additional-card, .price-box {
         background: rgba(255,255,255,0.12) !important;
+        backdrop-filter: none !important;
         border: 2px solid white !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
         break-inside: avoid;
         page-break-inside: avoid;
       }
+
       .price-box {
         background: white !important;
         color: #6b1668 !important;
         border: 3px solid #ffc107 !important;
       }
-      .card h2, .section-title, .premium-section h2 span {
-        color: #ff9c00 !important;
+
+      .price-box h3, .price-box span, .price-box small {
+        color: #4a0849 !important;
       }
+
+      .card h2, .premium-section h2 span, .section-title {
+        color: #ff9c00 !important;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
+      }
+
       .card li, .additional-card li {
         color: #fff2e6 !important;
       }
 
-      /* primeira página: nenhuma quebra interna */
-      .print-page1 {
-        break-inside: avoid;
-        page-break-after: avoid;
-      }
-
-      /* Força a quebra entre página 1 e 2 */
-      .break-page {
-        break-before: page;
-        page-break-before: always;
-      }
-
-      /* segunda página – layout flex para grudar rodapé no final */
+      /* Layout da segunda página com flex para empurrar o rodapé */
       .print-page2 {
         display: flex;
         flex-direction: column;
-        min-height: 100%; /* no contexto da página impressa */
-        break-inside: avoid;
+        min-height: 100vh; /* Ocupa toda altura da página */
       }
       .print-page2 .footer {
-        margin-top: auto;
-        border-top-color: #ffbc6e;
+        margin-top: auto; /* Empurra o rodapé para o final */
       }
 
-      /* ajustes de tamanho para caber exatamente em A4 */
-      .logo-img { max-width: 320px; }
-      .logo-central img { max-width: 260px; }
-      .card h2 { font-size: 26px; }
-      .card li { font-size: 16px; }
-      .section-title { font-size: 48px; margin: 30px 0 20px; }
-      .price-box h3 { font-size: 34px; }
-      .price-box span { font-size: 24px; }
-      .premium-section h2 { font-size: 44px; }
-      .additional-card .top-price { font-size: 28px; top: -16px; }
-      .grid-tradicional, .grid-premium, .grid-adicionais { gap: 16px; margin-top: 20px; }
-      .footer { font-size: 18px; margin-top: 30px; padding-top: 15px; }
+      .footer {
+        color: #ffcd94 !important;
+        border-top-color: rgba(255,200,100,0.4) !important;
+      }
+
+      /* Força quebra de página após os copos */
+      .page-break-after-copos {
+        page-break-before: always;
+        margin-top: 0;
+      }
 
       @page {
         size: A4;
-        margin: 1cm 0.8cm;
+        margin: 1.2cm 0.8cm;
+      }
+
+      /* Ajustes de tamanho para caber tudo */
+      .card h2 {
+        font-size: 26px;
+      }
+      .card li {
+        font-size: 16px;
+      }
+      .section-title {
+        font-size: 48px;
+        margin: 30px 0 20px;
+      }
+      .price-box h3 {
+        font-size: 34px;
+      }
+      .price-box span {
+        font-size: 24px;
+      }
+      .premium-section h2 {
+        font-size: 44px;
+        margin-bottom: 10px;
+      }
+      .additional-card .top-price {
+        font-size: 28px;
+        padding: 4px 12px;
+      }
+      .logo {
+        margin-bottom: 25px;
+      }
+      .logo img {
+        max-width: 320px;
+      }
+      .logo-central img {
+        max-width: 280px;
+      }
+      .grid-tradicional {
+        gap: 18px;
+        margin-top: 20px;
+      }
+      .grid-premium {
+        gap: 18px;
+        margin-top: 20px;
+      }
+      .grid-adicionais {
+        gap: 18px;
+        margin-top: 25px;
+      }
+      .footer {
+        margin-top: 40px;
+        padding-top: 15px;
+        font-size: 18px;
+      }
+
+      body, .page {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="page">
+<section class="page">
   <div class="decor-x x1">✕</div>
   <div class="decor-x x2">✕</div>
   <div class="decor-x x3">✕</div>
   <img class="leaf leaf-left" src="Folha.png" alt="folha">
   <img class="leaf leaf-right" src="Folha.png" alt="folha">
 
-  <!-- ================= PÁGINA 1 (IMPRESSÃO) ================= -->
+  <!-- ==================== PÁGINA 1 (IMPRESSÃO) ==================== -->
   <div class="print-page1">
     <div class="logo">
       <img src="logo.png" alt="Quero Mais Açaí" class="logo-img" onerror="this.style.display='none'; this.nextSibling.style.display='block';">
       <span>🍧 Cardápio Oficial</span>
     </div>
 
+    <!-- 9 SABORES TRADICIONAIS em 3 colunas fixas -->
     <div class="grid-tradicional">
       <div class="card"><h2>Açaí Tropical</h2><ul><li>Banana</li><li>Morango</li><li>Granola</li><li>Uva</li><li>Leite Condensado</li></ul></div>
       <div class="card"><h2>Açaí Sonho de Valsa</h2><ul><li>Leite Ninho</li><li>Leite Condensado</li><li>Canudo Wafer</li><li>ChocoBall</li><li>Chantilly</li><li>Sonho de Valsa</li></ul></div>
@@ -458,6 +584,7 @@
       <div class="card"><h2>Açaí Chocolate</h2><ul><li>Chantilly</li><li>Morango</li><li>Nutella</li><li>Gotas ou Granola</li><li>Granola</li><li>Leite em pó</li></ul></div>
     </div>
 
+    <!-- APENAS OS PREÇOS DOS COPOS -->
     <h2 class="section-title">Copos</h2>
     <div class="prices" id="container-copos">
       <div class="price-box"><small>R$</small><span>P 330ML</span><h3 class="price-val" data-cat="copo" data-size="p">--</h3></div>
@@ -466,15 +593,16 @@
     </div>
   </div>
 
-  <!-- QUEBRA OBRIGATÓRIA PARA A SEGUNDA PÁGINA -->
-  <div class="break-page"></div>
+  <!-- ==================== PÁGINA 2 (IMPRESSÃO) ==================== -->
+  <div class="page-break-after-copos"></div> <!-- Força quebra de página na impressão -->
 
-  <!-- ================= PÁGINA 2 (IMPRESSÃO) ================= -->
   <div class="print-page2">
+    <!-- SEGUNDA LOGO (centralizada) -->
     <div class="logo-central">
       <img src="logo.png" alt="Quero Mais Açaí" onerror="this.style.display='none'">
     </div>
 
+    <!-- SABORES PREMIUM (3 colunas) -->
     <div class="premium-section">
       <h2>Sabores <span>Premium</span></h2>
       <div class="grid-premium">
@@ -482,6 +610,7 @@
         <div class="card"><h2>Ninho c Morango</h2><ul><li>Brigadeiro de Ninho</li><li>Morango</li><li>Chantilly</li></ul></div>
         <div class="card"><h2>Ouro Branco</h2><ul><li>Chocoball</li><li>Nutella</li><li>Ouro Branco</li><li>Chantilly</li></ul></div>
       </div>
+      <!-- PREÇOS PREMIUM -->
       <div class="prices" id="container-premium" style="margin-top: 20px;">
         <div class="price-box"><small>R$</small><span>P 330ML</span><h3 class="price-val" data-cat="premium" data-size="p">--</h3></div>
         <div class="price-box"><small>R$</small><span>M 440ML</span><h3 class="price-val" data-cat="premium" data-size="m">--</h3></div>
@@ -489,6 +618,7 @@
       </div>
     </div>
 
+    <!-- ADICIONAIS (3 colunas) -->
     <h2 class="section-title">Adicionais</h2>
     <div class="grid-adicionais" id="adicionais-grid">
       <div class="additional-card"><div class="top-price" data-addcat="extra1">R$ --</div><ul><li>Banana</li><li>Bis</li><li>Granola</li><li>Leite Condensado</li><li>Paçoca</li><li>Amendoim</li></ul></div>
@@ -496,18 +626,19 @@
       <div class="additional-card"><div class="top-price" data-addcat="extra3">R$ --</div><ul><li>Sonho de Valsa</li><li>Cereja</li><li>Fini</li><li>Morango</li><li>Nutella</li><li>Creme de Ninho</li></ul></div>
     </div>
 
+    <!-- RODAPÉ (será empurrado automaticamente para o final da página) -->
     <div class="footer">
       <div>@queromaisacai37</div>
       <div>(62) 99621-4297</div>
       <div>Av. Goiânia Qd 22, Lt 12 - Centro</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- PAINEL DE EDIÇÃO -->
+<!-- PAINEL DE EDIÇÃO + BOTÃO PDF -->
 <div class="edit-panel">
-  <button class="print-toggle" id="printPdfBtn" title="Gerar PDF A4 (2 páginas perfeitas)">🖨️ PDF</button>
-  <button class="edit-toggle" id="openEditorBtn" title="Editar preços">✎</button>
+  <button class="print-toggle" id="printPdfBtn" title="Exportar para PDF (A4) - layout exato 2 páginas">🖨️ PDF</button>
+  <button class="edit-toggle" id="openEditorBtn" title="Editar preços (rápido)">✎</button>
   <div id="editorBox" class="editor-card hidden-panel">
     <h4>💸 Editar Preços (ao vivo)</h4>
     <label>🥤 Copos</label>
@@ -518,7 +649,7 @@
     <div class="price-row"><input type="number" step="0.5" id="adicional1" placeholder="Grupo 1 (R$)"> <input type="number" step="0.5" id="adicional2" placeholder="Grupo 2"> <input type="number" step="0.5" id="adicional3" placeholder="Grupo 3"></div>
     <button class="btn-save" id="applyPricesBtn">Aplicar preços na tela</button>
     <button class="btn-save reset-small" id="resetDefaultBtn">Restaurar padrão</button>
-    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ Altere os valores e clique em PDF –<br> as duas folhas A4 sairão perfeitas com o rodapé na posição correta.</small>
+    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ valores atualizam instantaneamente<br>✅ PDF gera 2 folhas A4 com rodapé no final da página 2</small>
   </div>
 </div>
 
@@ -531,28 +662,24 @@
 
   let currentPrices = JSON.parse(JSON.stringify(DEFAULT_PRICES));
 
-  function formatPrice(value) {
-    return value.toFixed(2).replace('.', ',');
-  }
-
   function refreshUI() {
     document.querySelectorAll('.price-val[data-cat="copo"]').forEach(el => {
       const size = el.getAttribute('data-size');
-      if (size === 'p') el.innerText = formatPrice(currentPrices.copo.p);
-      if (size === 'm') el.innerText = formatPrice(currentPrices.copo.m);
-      if (size === 'g') el.innerText = formatPrice(currentPrices.copo.g);
+      if (size === 'p') el.innerText = currentPrices.copo.p.toFixed(2).replace('.', ',');
+      if (size === 'm') el.innerText = currentPrices.copo.m.toFixed(2).replace('.', ',');
+      if (size === 'g') el.innerText = currentPrices.copo.g.toFixed(2).replace('.', ',');
     });
     document.querySelectorAll('.price-val[data-cat="premium"]').forEach(el => {
       const size = el.getAttribute('data-size');
-      if (size === 'p') el.innerText = formatPrice(currentPrices.premium.p);
-      if (size === 'm') el.innerText = formatPrice(currentPrices.premium.m);
-      if (size === 'g') el.innerText = formatPrice(currentPrices.premium.g);
+      if (size === 'p') el.innerText = currentPrices.premium.p.toFixed(2).replace('.', ',');
+      if (size === 'm') el.innerText = currentPrices.premium.m.toFixed(2).replace('.', ',');
+      if (size === 'g') el.innerText = currentPrices.premium.g.toFixed(2).replace('.', ',');
     });
     const extraElements = document.querySelectorAll('.top-price');
     if (extraElements.length >= 3) {
-      extraElements[0].innerText = `R$ ${formatPrice(currentPrices.adicionais.extra1)}`;
-      extraElements[1].innerText = `R$ ${formatPrice(currentPrices.adicionais.extra2)}`;
-      extraElements[2].innerText = `R$ ${formatPrice(currentPrices.adicionais.extra3)}`;
+      extraElements[0].innerText = `R$ ${currentPrices.adicionais.extra1.toFixed(2).replace('.',',')}`;
+      extraElements[1].innerText = `R$ ${currentPrices.adicionais.extra2.toFixed(2).replace('.',',')}`;
+      extraElements[2].innerText = `R$ ${currentPrices.adicionais.extra3.toFixed(2).replace('.',',')}`;
     }
   }
 
