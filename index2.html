@@ -19,7 +19,7 @@
       overflow-x: hidden;
     }
 
-    /* PAINEL DE EDIÇÃO RÁPIDA (APENAS PARA O ADMIN) */
+    /* PAINEL DE EDIÇÃO RÁPIDA (APENAS ADMIN) */
     .edit-panel {
       position: fixed;
       bottom: 20px;
@@ -31,7 +31,7 @@
       gap: 12px;
     }
 
-    .edit-toggle {
+    .edit-toggle, .print-toggle {
       background: #ff9c00;
       border: none;
       width: 56px;
@@ -48,9 +48,18 @@
       justify-content: center;
     }
 
-    .edit-toggle:hover {
+    .print-toggle {
+      background: #7c3a7a;
+      font-size: 26px;
+    }
+
+    .edit-toggle:hover, .print-toggle:hover {
       transform: scale(1.05);
       background: #ffb833;
+    }
+
+    .print-toggle:hover {
+      background: #9b4d99;
     }
 
     .editor-card {
@@ -380,7 +389,6 @@
       transform: scaleX(-1) rotate(-8deg);
     }
 
-    /* logo centralizada abaixo dos preços */
     .logo-central {
       text-align: center;
       margin: 60px 0 40px;
@@ -418,6 +426,89 @@
       }
       .logo-central img {
         max-width: 280px;
+      }
+    }
+
+    /* ========== ESTILOS PARA IMPRESSÃO (PDF A4) ========== */
+    @media print {
+      /* Remove elementos decorativos, botões, fundos escuros */
+      .edit-panel, .decor-x, .leaf, .edit-toggle, .print-toggle {
+        display: none !important;
+      }
+
+      body {
+        background: white !important;
+        color: black !important;
+      }
+
+      .page {
+        background: white !important;
+        padding: 0.5cm !important;
+        min-height: auto !important;
+      }
+
+      /* Força cores escuras em textos e fundos claros para economia de tinta */
+      .card, .additional-card, .price-box {
+        background: #fef7e8 !important;
+        border: 1px solid #bbb !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        color: #2c0b2a !important;
+      }
+
+      .card h2, .section-title, .premium h2 span, .premium h2 {
+        color: #b45309 !important;
+        text-shadow: none !important;
+      }
+
+      .card ul li, .additional-card li {
+        color: #2c0b2a !important;
+      }
+
+      .price-box {
+        background: white !important;
+        border: 2px solid #d4a373 !important;
+      }
+
+      .price-box small, .price-box span, .price-box h3 {
+        color: #4a0e48 !important;
+      }
+
+      .footer {
+        border-top: 1px solid #ccc;
+        color: #6b3e6a !important;
+      }
+
+      .logo-central img, .logo img {
+        filter: none !important;
+        max-width: 300px;
+      }
+
+      /* Evita quebras dentro dos cards principais */
+      .card, .price-box, .additional-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Garante margens justas para A4 */
+      @page {
+        size: A4;
+        margin: 1.2cm;
+      }
+
+      /* Ajuste de títulos para não grudarem */
+      .section-title {
+        margin: 30px 0 20px;
+        font-size: 48px;
+      }
+
+      .premium {
+        margin-top: 40px;
+      }
+
+      /* Remove brilhos e gradientes */
+      .card::before {
+        background: #ff9c00 !important;
       }
     }
   </style>
@@ -493,8 +584,9 @@
   </div>
 </section>
 
-<!-- PAINEL DE EDIÇÃO RÁPIDA -->
+<!-- PAINEL DE EDIÇÃO + BOTÃO DE PDF -->
 <div class="edit-panel">
+  <button class="print-toggle" id="printPdfBtn" title="Exportar para PDF / Imprimir (A4)">🖨️</button>
   <button class="edit-toggle" id="openEditorBtn" title="Editar preços (rápido)">✎</button>
   <div id="editorBox" class="editor-card hidden-panel">
     <h4>💸 Editar Preços (ao vivo)</h4>
@@ -506,12 +598,12 @@
     <div class="price-row"><input type="number" step="0.5" id="adicional1" placeholder="Grupo 1 (R$)"> <input type="number" step="0.5" id="adicional2" placeholder="Grupo 2"> <input type="number" step="0.5" id="adicional3" placeholder="Grupo 3"></div>
     <button class="btn-save" id="applyPricesBtn">Aplicar preços na tela</button>
     <button class="btn-save reset-small" id="resetDefaultBtn">Restaurar padrão</button>
-    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ valores atualizam instantaneamente<br>✅ tire print após salvar</small>
+    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ valores atualizam instantaneamente<br>✅ tire print ou use o botão PDF</small>
   </div>
 </div>
 
 <script>
-  // PREÇOS PADRÃO (sem a seção Tigela)
+  // PREÇOS PADRÃO (sem Tigela)
   const DEFAULT_PRICES = {
     copo: { p: 14.00, m: 16.00, g: 19.00 },
     premium: { p: 17.00, m: 19.00, g: 22.00 },
@@ -576,6 +668,11 @@
     refreshUI();
   }
 
+  // Função para exportar PDF via impressão (A4)
+  function exportToPDF() {
+    window.print();
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     updateInputsFromCurrent();
     refreshUI();
@@ -595,7 +692,19 @@
         editorDiv.classList.add('hidden-panel');
       }
     });
+
+    // Botão de PDF
+    const pdfBtn = document.getElementById('printPdfBtn');
+    if (pdfBtn) {
+      pdfBtn.addEventListener('click', exportToPDF);
+    }
   });
+
+  window.cardapioEditor = {
+    getPrecos: () => currentPrices,
+    setPrecos: (novosPrecos) => { currentPrices = { ...currentPrices, ...novosPrecos }; refreshUI(); updateInputsFromCurrent(); },
+    reset: resetToDefault
+  };
 </script>
 </body>
 </html>
