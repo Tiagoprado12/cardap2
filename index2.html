@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Quero Mais Açaí | Cardápio Digital + Impressão A4</title>
+  <title>Quero Mais Açaí | Cardápio Impressão A4 Corrigido</title>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -417,9 +417,8 @@
       }
     }
 
-    /* ========== IMPRESSÃO EXATAMENTE COMO SOLICITADO ========== */
+    /* ========== IMPRESSÃO COM RODAPÉ CORRETAMENTE POSICIONADO ========== */
     @media print {
-      /* Esconde botões e elementos decorativos */
       .edit-panel, .edit-toggle, .print-toggle, .editor-card {
         display: none !important;
       }
@@ -470,29 +469,33 @@
         color: #fff2e6 !important;
       }
 
+      /* Layout da segunda página com flex para empurrar o rodapé */
+      .print-page2 {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ocupa toda altura da página */
+      }
+      .print-page2 .footer {
+        margin-top: auto; /* Empurra o rodapé para o final */
+      }
+
       .footer {
         color: #ffcd94 !important;
         border-top-color: rgba(255,200,100,0.4) !important;
       }
 
-      /* Organização obrigatória: página 1 e página 2 */
-      .print-page1, .print-page2 {
-        page-break-after: avoid;
-      }
-
-      /* Força início da página 2 após os copos */
+      /* Força quebra de página após os copos */
       .page-break-after-copos {
         page-break-before: always;
         margin-top: 0;
       }
 
-      /* Ajustes de margem e tamanho */
       @page {
         size: A4;
         margin: 1.2cm 0.8cm;
       }
 
-      /* Reduções leves para caber perfeitamente */
+      /* Ajustes de tamanho para caber tudo */
       .card h2 {
         font-size: 26px;
       }
@@ -544,7 +547,6 @@
         font-size: 18px;
       }
 
-      /* Mantém cores exatas na impressão */
       body, .page {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -582,7 +584,7 @@
       <div class="card"><h2>Açaí Chocolate</h2><ul><li>Chantilly</li><li>Morango</li><li>Nutella</li><li>Gotas ou Granola</li><li>Granola</li><li>Leite em pó</li></ul></div>
     </div>
 
-    <!-- APENAS OS PREÇOS DOS COPOS (sem tigela, sem batidas) -->
+    <!-- APENAS OS PREÇOS DOS COPOS -->
     <h2 class="section-title">Copos</h2>
     <div class="prices" id="container-copos">
       <div class="price-box"><small>R$</small><span>P 330ML</span><h3 class="price-val" data-cat="copo" data-size="p">--</h3></div>
@@ -608,7 +610,7 @@
         <div class="card"><h2>Ninho c Morango</h2><ul><li>Brigadeiro de Ninho</li><li>Morango</li><li>Chantilly</li></ul></div>
         <div class="card"><h2>Ouro Branco</h2><ul><li>Chocoball</li><li>Nutella</li><li>Ouro Branco</li><li>Chantilly</li></ul></div>
       </div>
-      <!-- PREÇOS PREMIUM (opcional, mas mantido) -->
+      <!-- PREÇOS PREMIUM -->
       <div class="prices" id="container-premium" style="margin-top: 20px;">
         <div class="price-box"><small>R$</small><span>P 330ML</span><h3 class="price-val" data-cat="premium" data-size="p">--</h3></div>
         <div class="price-box"><small>R$</small><span>M 440ML</span><h3 class="price-val" data-cat="premium" data-size="m">--</h3></div>
@@ -624,6 +626,7 @@
       <div class="additional-card"><div class="top-price" data-addcat="extra3">R$ --</div><ul><li>Sonho de Valsa</li><li>Cereja</li><li>Fini</li><li>Morango</li><li>Nutella</li><li>Creme de Ninho</li></ul></div>
     </div>
 
+    <!-- RODAPÉ (será empurrado automaticamente para o final da página) -->
     <div class="footer">
       <div>@queromaisacai37</div>
       <div>(62) 99621-4297</div>
@@ -646,7 +649,7 @@
     <div class="price-row"><input type="number" step="0.5" id="adicional1" placeholder="Grupo 1 (R$)"> <input type="number" step="0.5" id="adicional2" placeholder="Grupo 2"> <input type="number" step="0.5" id="adicional3" placeholder="Grupo 3"></div>
     <button class="btn-save" id="applyPricesBtn">Aplicar preços na tela</button>
     <button class="btn-save reset-small" id="resetDefaultBtn">Restaurar padrão</button>
-    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ valores atualizam instantaneamente<br>✅ PDF gera 2 folhas A4 com layout perfeito</small>
+    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ valores atualizam instantaneamente<br>✅ PDF gera 2 folhas A4 com rodapé no final da página 2</small>
   </div>
 </div>
 
