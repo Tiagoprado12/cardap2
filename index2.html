@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Quero Mais Açaí | Cardápio Impressão A4 (rodapé corrigido)</title>
+  <title>Quero Mais Açaí | Cardápio Impressão A4 Corrigido</title>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -167,6 +167,7 @@
       margin-top: -10px;
     }
 
+    /* Grid para os sabores tradicionais: sempre 3 colunas em desktop */
     .grid-tradicional {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -174,6 +175,7 @@
       margin-top: 30px;
     }
 
+    /* Grid para premium (3 colunas também) */
     .grid-premium {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -181,6 +183,7 @@
       margin-top: 30px;
     }
 
+    /* Grid para adicionais (3 colunas) */
     .grid-adicionais {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -414,7 +417,7 @@
       }
     }
 
-    /* ========== IMPRESSÃO CORRIGIDA: RODAPÉ NO FINAL DA PÁGINA 2 (SEM PÁGINA EXTRA) ========== */
+    /* ========== IMPRESSÃO COM RODAPÉ CORRETAMENTE POSICIONADO ========== */
     @media print {
       .edit-panel, .edit-toggle, .print-toggle, .editor-card {
         display: none !important;
@@ -423,41 +426,18 @@
         display: none !important;
       }
 
-      /* Força o corpo e a página a ocupar 100% da altura da página impressa */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
       body {
         background: #4f0b4e !important;
+        margin: 0;
+        padding: 0;
       }
 
       .page {
         background: linear-gradient(180deg, #4a0849 0%, #651263 45%, #73146f 100%) !important;
         padding: 0.5cm !important;
         margin: 0 auto;
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* Primeira página: conteúdo normal, sem flex especial */
-      .print-page1 {
-        flex-shrink: 0;
-      }
-
-      /* Segunda página: usa flex para empurrar o rodapé para o fim */
-      .print-page2 {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        min-height: 100%; /* Ocupa toda a altura disponível na página */
-      }
-
-      .print-page2 .footer {
-        margin-top: auto; /* Gruda no final */
+        width: 100%;
+        min-height: auto;
       }
 
       /* Mantém fundo e cores */
@@ -489,12 +469,22 @@
         color: #fff2e6 !important;
       }
 
+      /* Layout da segunda página com flex para empurrar o rodapé */
+      .print-page2 {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ocupa toda altura da página */
+      }
+      .print-page2 .footer {
+        margin-top: auto; /* Empurra o rodapé para o final */
+      }
+
       .footer {
         color: #ffcd94 !important;
         border-top-color: rgba(255,200,100,0.4) !important;
       }
 
-      /* Força quebra de página após os copos (fim da página 1) */
+      /* Força quebra de página após os copos */
       .page-break-after-copos {
         page-break-before: always;
         margin-top: 0;
@@ -505,7 +495,7 @@
         margin: 1.2cm 0.8cm;
       }
 
-      /* Ajustes de tamanho para caber tudo em 2 páginas */
+      /* Ajustes de tamanho para caber tudo */
       .card h2 {
         font-size: 26px;
       }
@@ -513,48 +503,48 @@
         font-size: 16px;
       }
       .section-title {
-        font-size: 44px;
+        font-size: 48px;
         margin: 30px 0 20px;
       }
       .price-box h3 {
-        font-size: 32px;
+        font-size: 34px;
       }
       .price-box span {
-        font-size: 22px;
+        font-size: 24px;
       }
       .premium-section h2 {
-        font-size: 40px;
+        font-size: 44px;
         margin-bottom: 10px;
       }
       .additional-card .top-price {
-        font-size: 26px;
+        font-size: 28px;
         padding: 4px 12px;
       }
       .logo {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
       }
       .logo img {
-        max-width: 280px;
+        max-width: 320px;
       }
       .logo-central img {
-        max-width: 250px;
+        max-width: 280px;
       }
       .grid-tradicional {
-        gap: 16px;
-        margin-top: 15px;
+        gap: 18px;
+        margin-top: 20px;
       }
       .grid-premium {
-        gap: 16px;
-        margin-top: 15px;
+        gap: 18px;
+        margin-top: 20px;
       }
       .grid-adicionais {
-        gap: 16px;
-        margin-top: 20px;
+        gap: 18px;
+        margin-top: 25px;
       }
       .footer {
-        font-size: 16px;
-        padding-top: 12px;
-        margin-top: 20px;
+        margin-top: 40px;
+        padding-top: 15px;
+        font-size: 18px;
       }
 
       body, .page {
@@ -581,7 +571,7 @@
       <span>🍧 Cardápio Oficial</span>
     </div>
 
-    <!-- 9 SABORES TRADICIONAIS -->
+    <!-- 9 SABORES TRADICIONAIS em 3 colunas fixas -->
     <div class="grid-tradicional">
       <div class="card"><h2>Açaí Tropical</h2><ul><li>Banana</li><li>Morango</li><li>Granola</li><li>Uva</li><li>Leite Condensado</li></ul></div>
       <div class="card"><h2>Açaí Sonho de Valsa</h2><ul><li>Leite Ninho</li><li>Leite Condensado</li><li>Canudo Wafer</li><li>ChocoBall</li><li>Chantilly</li><li>Sonho de Valsa</li></ul></div>
@@ -594,7 +584,7 @@
       <div class="card"><h2>Açaí Chocolate</h2><ul><li>Chantilly</li><li>Morango</li><li>Nutella</li><li>Gotas ou Granola</li><li>Granola</li><li>Leite em pó</li></ul></div>
     </div>
 
-    <!-- PREÇOS DOS COPOS -->
+    <!-- APENAS OS PREÇOS DOS COPOS -->
     <h2 class="section-title">Copos</h2>
     <div class="prices" id="container-copos">
       <div class="price-box"><small>R$</small><span>P 330ML</span><h3 class="price-val" data-cat="copo" data-size="p">--</h3></div>
@@ -604,13 +594,15 @@
   </div>
 
   <!-- ==================== PÁGINA 2 (IMPRESSÃO) ==================== -->
-  <div class="page-break-after-copos"></div>
+  <div class="page-break-after-copos"></div> <!-- Força quebra de página na impressão -->
 
   <div class="print-page2">
+    <!-- SEGUNDA LOGO (centralizada) -->
     <div class="logo-central">
       <img src="logo.png" alt="Quero Mais Açaí" onerror="this.style.display='none'">
     </div>
 
+    <!-- SABORES PREMIUM (3 colunas) -->
     <div class="premium-section">
       <h2>Sabores <span>Premium</span></h2>
       <div class="grid-premium">
@@ -618,6 +610,7 @@
         <div class="card"><h2>Ninho c Morango</h2><ul><li>Brigadeiro de Ninho</li><li>Morango</li><li>Chantilly</li></ul></div>
         <div class="card"><h2>Ouro Branco</h2><ul><li>Chocoball</li><li>Nutella</li><li>Ouro Branco</li><li>Chantilly</li></ul></div>
       </div>
+      <!-- PREÇOS PREMIUM -->
       <div class="prices" id="container-premium" style="margin-top: 20px;">
         <div class="price-box"><small>R$</small><span>P 330ML</span><h3 class="price-val" data-cat="premium" data-size="p">--</h3></div>
         <div class="price-box"><small>R$</small><span>M 440ML</span><h3 class="price-val" data-cat="premium" data-size="m">--</h3></div>
@@ -625,6 +618,7 @@
       </div>
     </div>
 
+    <!-- ADICIONAIS (3 colunas) -->
     <h2 class="section-title">Adicionais</h2>
     <div class="grid-adicionais" id="adicionais-grid">
       <div class="additional-card"><div class="top-price" data-addcat="extra1">R$ --</div><ul><li>Banana</li><li>Bis</li><li>Granola</li><li>Leite Condensado</li><li>Paçoca</li><li>Amendoim</li></ul></div>
@@ -632,6 +626,7 @@
       <div class="additional-card"><div class="top-price" data-addcat="extra3">R$ --</div><ul><li>Sonho de Valsa</li><li>Cereja</li><li>Fini</li><li>Morango</li><li>Nutella</li><li>Creme de Ninho</li></ul></div>
     </div>
 
+    <!-- RODAPÉ (será empurrado automaticamente para o final da página) -->
     <div class="footer">
       <div>@queromaisacai37</div>
       <div>(62) 99621-4297</div>
@@ -642,7 +637,7 @@
 
 <!-- PAINEL DE EDIÇÃO + BOTÃO PDF -->
 <div class="edit-panel">
-  <button class="print-toggle" id="printPdfBtn" title="Exportar para PDF (A4) - rodapé no final da página 2">🖨️ PDF</button>
+  <button class="print-toggle" id="printPdfBtn" title="Exportar para PDF (A4) - layout exato 2 páginas">🖨️ PDF</button>
   <button class="edit-toggle" id="openEditorBtn" title="Editar preços (rápido)">✎</button>
   <div id="editorBox" class="editor-card hidden-panel">
     <h4>💸 Editar Preços (ao vivo)</h4>
@@ -654,7 +649,7 @@
     <div class="price-row"><input type="number" step="0.5" id="adicional1" placeholder="Grupo 1 (R$)"> <input type="number" step="0.5" id="adicional2" placeholder="Grupo 2"> <input type="number" step="0.5" id="adicional3" placeholder="Grupo 3"></div>
     <button class="btn-save" id="applyPricesBtn">Aplicar preços na tela</button>
     <button class="btn-save reset-small" id="resetDefaultBtn">Restaurar padrão</button>
-    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ valores atualizam instantaneamente<br>✅ PDF gera 2 folhas A4 com rodapé na página 2</small>
+    <small style="display: block; margin-top: 12px; color:#ffdd99;">✔️ valores atualizam instantaneamente<br>✅ PDF gera 2 folhas A4 com rodapé no final da página 2</small>
   </div>
 </div>
 
